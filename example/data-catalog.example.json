@@ -1,0 +1,137 @@
+{
+  "_comment": "Demo asset catalog. One entry per dtype, plus one extra, so the CHECK constraint in build_assets_db.py is exercised by every allowed value. Replace the paths with your own; the shape is what the scripts depend on.",
+  "assets": [
+    {
+      "dtype": "identity",
+      "name": "Project Profile",
+      "path": "example/knowledge/project-profile.md",
+      "value": "What Helios is: owner, stage, interfaces, sharp edges",
+      "risk": "loss is not recoverable",
+      "context": "any session that touches the project",
+      "freshness": "0d",
+      "verified": 1,
+      "tags": "project,helios,facts,owner,stage"
+    },
+    {
+      "dtype": "capability",
+      "name": "Style Rules",
+      "path": "example/knowledge/style-rules.md",
+      "value": "Eight WHEN/USE/AVOID rules with the failure each one prevents",
+      "risk": "stale means wrong tone with no signal",
+      "context": "writing, reviewing, reporting",
+      "freshness": "3d",
+      "verified": 1,
+      "tags": "writing,style,tone,review"
+    },
+    {
+      "dtype": "evidence",
+      "name": "Constraints",
+      "path": "example/knowledge/constraints.md",
+      "value": "Three HARD and three SOFT rules, each with its source incident",
+      "risk": "deleting one silently removes a gate's justification",
+      "context": "before any change is accepted",
+      "freshness": "1d",
+      "verified": 1,
+      "tags": "constraint,rule,policy,incident"
+    },
+    {
+      "dtype": "knowledge",
+      "name": "Knowledge Index",
+      "path": "example/knowledge-index.json",
+      "value": "Compressed view of the three source files; rebuilt, never edited",
+      "risk": "recoverable — rebuild with one command",
+      "context": "session startup",
+      "freshness": "0d",
+      "verified": 1,
+      "tags": "index,derived,startup,compressed"
+    },
+    {
+      "dtype": "work",
+      "name": "Endpoint Implementation",
+      "path": "src/events.py",
+      "value": "POST /v1/events handler and idempotency-key check",
+      "risk": "append-only; history matters more than tidiness",
+      "context": "code work",
+      "freshness": "7d",
+      "verified": 0,
+      "tags": "api,endpoint,handler,idempotency"
+    },
+    {
+      "dtype": "relationship",
+      "name": "Owner Contact",
+      "path": "docs/owners.md",
+      "value": "Who to ask about which subsystem",
+      "risk": "not recoverable if nobody writes it down",
+      "context": "escalation, handover",
+      "freshness": "30d",
+      "verified": 1,
+      "tags": "owner,team,escalation,handover"
+    },
+    {
+      "dtype": "feedback",
+      "name": "Postmortems",
+      "path": "docs/postmortems",
+      "value": "One file per incident; the source field of every HARD constraint",
+      "risk": "append-only, never delete",
+      "context": "why a rule exists",
+      "freshness": "14d",
+      "verified": 1,
+      "tags": "incident,postmortem,root-cause,regression"
+    },
+    {
+      "dtype": "creation",
+      "name": "Release Notes",
+      "path": "docs/releases.md",
+      "value": "What shipped, when, and the command that verified it",
+      "risk": "not recoverable once the context is gone",
+      "context": "release, changelog",
+      "freshness": "7d",
+      "verified": 1,
+      "tags": "release,changelog,ship,version"
+    },
+    {
+      "dtype": "raw",
+      "name": "Session Transcripts",
+      "path": ".state/transcripts",
+      "value": "Append-only raw record; the rebuild source for everything above",
+      "risk": "append-only, never delete",
+      "context": "audit, forensics, rebuild",
+      "freshness": "0d",
+      "verified": 0,
+      "tags": "transcript,raw,audit,session"
+    },
+    {
+      "dtype": "config",
+      "name": "Harness Config",
+      "path": "config.example.json",
+      "value": "Path resolution and the hook wiring; a broken config disables every gate",
+      "risk": "corruption disables all gates at once",
+      "context": "system health",
+      "freshness": "1d",
+      "verified": 1,
+      "tags": "config,hooks,settings,gate"
+    },
+    {
+      "dtype": "metadata",
+      "name": "Asset Catalog",
+      "path": "example/data-catalog.example.json",
+      "value": "This file: the inventory of assets and their risk",
+      "risk": "lag means the inventory lies",
+      "context": "inventory, review",
+      "freshness": "3d",
+      "verified": 1,
+      "tags": "catalog,inventory,asset,metadata"
+    },
+    {
+      "dtype": "feedback",
+      "name": "Gate Log",
+      "path": ".state/gates.jsonl",
+      "value": "Every gate firing, with the trigger that fired it — the corpus for fixing false positives",
+      "risk": "append-only; a gate log with no trigger recorded cannot be debugged",
+      "context": "tuning a gate, investigating noise",
+      "freshness": "0d",
+      "verified": 1,
+      "tags": "gate,log,false-positive,tuning,noise"
+    }
+  ]
+}

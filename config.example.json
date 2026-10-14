@@ -1,0 +1,32 @@
+{
+  "_note": "Every path here is relative to the repository root, so a fresh clone works with no edit. Every script reads this file through scripts/_paths.py. Copy it to config.json to override locally; config.json is gitignored.",
+
+  "knowledge": {
+    "_note": "The source directory and the derived index. build_index.py writes the index; freshness_check.py compares the two.",
+    "dir": "example/knowledge",
+    "index": "example/knowledge-index.json",
+    "ttl_seconds": 86400
+  },
+
+  "assets": {
+    "_note": "The navigation index is parsed for routes; the catalog is the hand-maintained asset inventory. Both feed build_assets_db.py.",
+    "routes_source": "example/MEMORY.example.md",
+    "catalog": "example/data-catalog.example.json",
+    "db": "example/data-assets.db"
+  },
+
+  "gates": {
+    "_note": "state_dir holds runtime state files. Those names are the contract; see ARCHITECTURE.md section 4. They are gitignored because they describe what happened in one session, not what the project is.",
+    "state_dir": ".state",
+    "extra_protected_paths": [
+      {
+        "pattern": "(^|/)deploy/secrets/",
+        "why": "deployment secret material"
+      },
+      {
+        "pattern": "(^|/)backups/.*\\.sql$",
+        "why": "database dumps are unreadable and un-reviewable in a diff"
+      }
+    ]
+  }
+}

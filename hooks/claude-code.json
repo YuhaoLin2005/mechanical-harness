@@ -1,0 +1,63 @@
+{
+  "_note": "Copy the `hooks` key below into the top level of a Claude Code settings.json, merging with whatever is already there. `_note` is a comment for you; do not copy it. $CLAUDE_PROJECT_DIR is provided by Claude Code, and using it keeps every command free of machine-specific absolute paths — which is what lets a fresh clone run without editing anything.",
+
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"$CLAUDE_PROJECT_DIR/scripts/freshness_check.py\""
+          }
+        ]
+      }
+    ],
+
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"$CLAUDE_PROJECT_DIR/scripts/route_router.py\" || exit 0"
+          }
+        ]
+      }
+    ],
+
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"$CLAUDE_PROJECT_DIR/scripts/sensitive_path_guard.py\""
+          }
+        ]
+      },
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"$CLAUDE_PROJECT_DIR/scripts/evidence_gate.py\""
+          }
+        ]
+      }
+    ],
+
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python \"$CLAUDE_PROJECT_DIR/scripts/quality_gate.py\""
+          },
+          {
+            "type": "command",
+            "command": "python \"$CLAUDE_PROJECT_DIR/scripts/claim_gate.py\" || exit 0"
+          }
+        ]
+      }
+    ]
+  }
+}

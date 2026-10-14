@@ -1,0 +1,47 @@
+# ---------------------------------------------------------------------------
+# mechanical-harness — ignore rules
+#
+# Two families live here:
+#   1. State files  — written at runtime; the *names* are the contract
+#                     (see ARCHITECTURE.md §4). They must never be committed.
+#   2. Secrets      — a denylist, not a scanner. Real scanning is sanitize.py.
+# ---------------------------------------------------------------------------
+
+# --- 1. Runtime state files -------------------------------------------------
+.state/
+*.pending
+*.jsonl
+honesty-flags.jsonl
+session-gate-log.jsonl
+
+# --- 2. Generated artifacts from the example run ----------------------------
+# These are *derived* from example/ — reproducible with one command. Committing
+# them would let the index drift silently out of sync with its sources.
+example/knowledge-index.json
+example/data-assets.db
+example/data-assets.db-journal
+
+# --- 3. Secrets and local overrides -----------------------------------------
+.env
+.env.*
+*.key
+*.pem
+*_token
+*_secret
+credentials.json
+settings.local.json
+
+# --- 4. The sanitization denylist -------------------------------------------
+# sanitize.py reads a real denylist via --denylist for tokens that cannot be
+# expressed as a generic pattern (company names, third-party repos, people).
+# That file is local-only by construction: it is the list of things you are
+# trying not to publish.
+denylist.txt
+.denylist
+
+# --- 5. Python ---------------------------------------------------------------
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/

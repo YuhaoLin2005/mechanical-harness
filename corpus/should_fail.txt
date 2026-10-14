@@ -1,0 +1,54 @@
+# corpus/should_fail.txt — the negative control for scripts/sanitize.py
+#
+# This file is the reason sanitize.py can be trusted. A gate that has never
+# gone red is not a gate. `scripts/sanitize.py --selftest` reads this file and
+# requires EVERY line below to be caught, and every CLEAN line to be missed.
+# If a line here stops being caught, the self-test fails and says so.
+#
+# Format:   <CLASS>::<sample>
+#   CLASS      which detector must fire
+#   CLEAN      control line — no detector may fire
+#   # comment
+#
+# The samples are synthetic. They are shaped like real leaks so the patterns
+# are exercised, but the values are reserved placeholders (`example.com`,
+# `example_user`, `EXAMPLE…`). Do not put a real value in this file: whatever
+# is here gets published along with the repo.
+#
+# Note: `--export-scan` skips this directory on purpose. This file is supposed
+# to be dirty.
+
+# --- DIM-1 · home directory paths -------------------------------------------
+HOME_PATH::See the notes in C:/Users/example_user/Documents/notes.md for context.
+HOME_PATH::The config still points at /home/example_user/.config/harness.json from the old box.
+
+# --- DIM-1 · email addresses -------------------------------------------------
+EMAIL::Ping example.user@example.com before the change lands.
+
+# --- DIM-1 · credentials -----------------------------------------------------
+SECRET::Set GH_TOKEN=ghp_EXAMPLE0000000000000000000000000000 in the environment first.
+SECRET::api_key = "sk-EXAMPLE000000000000000000"
+PRIVATE_KEY::-----BEGIN RSA PRIVATE KEY-----
+
+# --- DIM-1 · long digit runs (phone numbers, account ids) --------------------
+DIGIT_RUN::Call 13107671278 and ask for the account id.
+
+# --- DIM-2 · attribution to someone else (NOT waivable) ----------------------
+ATTRIBUTION::This pipeline is actually someone else's work that I was asked to present.
+ATTRIBUTION::I was asked to claim authorship of the design review.
+ATTRIBUTION::Credit for the architecture goes to the original author, not to me.
+
+# --- DIM-2 · person drift (third-person self-reference mixed with first) -----
+PERSON_DRIFT::The author built this system. I only cleaned it up and shipped it.
+
+# --- DIM-2 · internal motivation (NOT waivable) ------------------------------
+INTERNAL_MOTIVE::The README is written this way so it looks good to the recruiter.
+
+# --- DIM-2 · ownership claim -------------------------------------------------
+OWNERSHIP::I built the whole harness in two weeks and I own every file in it.
+
+# --- CLEAN controls — none of these may be flagged ---------------------------
+CLEAN::The harness compares a recorded source mtime against the live one.
+CLEAN::Run `python scripts/selftest.py` to exercise every component end to end.
+CLEAN::A gate that cannot turn red is worse than no gate, because it reports success.
+CLEAN::See ARCHITECTURE.md section 3 for the exit-code contract.
